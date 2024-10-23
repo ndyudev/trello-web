@@ -1,24 +1,26 @@
-import { createTheme } from '@mui/material/styles'
-import { red } from '@mui/material/colors'
+import { createTheme } from '@mui/material/styles';
+import { experimental_extendTheme as extendTheme} from '@mui/material/styles'
+import { red } from '@mui/material/colors';
+import { dark } from '@mui/material/styles/createPalette';
 
-// Create a theme instance.
 const theme = createTheme({
-  cssVariables: true,
-  palette: {
-    mode:'dark', //Default is Light
-    primary: {
-      main: green[500]// git branch
+    colorSchemes: {
+        light: {
+            palette: {
+                // primary: {
+                //     main: '#ff5252'
+                // }
+            }
+        },
+        dark: {
+            palette: {
+                // primary: {
+                //     // main: '#000'
+                // }
+            }
+        }
     },
-    secondary: {
-      main: '#19857b'
-    },
-    error: {
-      main: red.A400
-    },
-    text: {
-        secondary: red[500]
-    }
-  }
-})
+  // ... các thuộc tính khác của theme
+});
 
-export default theme;
+export default theme
