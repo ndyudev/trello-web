@@ -7,8 +7,7 @@ const theme = createTheme({
   palette: {
     mode:'dark', //Default is Light
     primary: {
-        //Debug Color ThemeJS
-      main: red[550]
+      main: green[500]// git branch
     },
     secondary: {
       main: '#19857b'
