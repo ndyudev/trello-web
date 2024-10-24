@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import { pink } from '@mui/material/colors'
 import Typography from '@mui/material/Typography'
 
-import { useColorScheme } from '@mui/material/styles'
+import {useColorScheme} from '@mui/material/styles'
 
 function ModeToggle() {
   const { mode, setMode } = useColorScheme()
@@ -13,22 +13,22 @@ function ModeToggle() {
     <Button
       onClick={() => {
         setMode(mode === 'light' ? 'dark' : 'light')
-        localStorage.setItem('trello-dark-light-mode')
-        localStorage.getItem('trello-dark-light-mode')
+        // localStorage.setItem('trello-dark-light-mode')
+        // localStorage.getItem('trello-dark-light-mode')
       }}
     >
       {mode === 'light' ? 'Turn dark' : 'Turn light'}
-    </Button>   
+    </Button>
   )
 }
 
 function App() {
   return (
     <>
-      <ModeToggle  />
+      <ModeToggle/>
       <hr />
       <div>nhatduydev</div>
-      <Typography variant='body2' color='text.secondary'>Text Typograp</Typography>
+      <Typography variant='body2' color='text.secondary'>Text Typography</Typography>
       <Button variant="text">Text</Button>
       <Button variant="contained">Contained</Button>
       <Button variant="outlined">Outlined</Button>
