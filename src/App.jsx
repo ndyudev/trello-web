@@ -40,12 +40,12 @@ function ModeSelect() {
           </div>
         </MenuItem>
         <MenuItem value='dark'>
-          <Box sx={{display: 'flex', alignItems:'center', gap: 1 }}>
+          <Box sx={{display: 'flex', alignItems:'center', gap: '8px' }}>
             <DarkModeOutlinedIcon fontSize='small' /> Dark
           </Box>
         </MenuItem>
         <MenuItem value='system'>
-          <Box sx={{display: 'flex', alignItems:'center', gap: 1 }}>
+          <Box sx={{display: 'flex', alignItems:'center', gap: '8px' }}>
             <SettingsBrightnessIcon fontSize='small'/> System
           </Box>
         </MenuItem>
