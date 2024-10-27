@@ -1,10 +1,10 @@
 // Chương Trình Chạy File Này Đầu Tiên.
 import React from 'react'
 import ReactDom from 'react-dom/client'
-import App from './App.jsx'
+import App from '~/App.jsx'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
-import theme from './theme.js'
+import theme from '~/theme.js'
 
 ReactDom.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
