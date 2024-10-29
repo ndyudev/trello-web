@@ -35,7 +35,7 @@ function Profiles() {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar
-            sx={{ width: 30, height: 30 }}
+            sx={{ width: 34, height: 34 }}
             alt="nDyuDev"
             src="https://i.pinimg.com/564x/44/cf/8b/44cf8b5f7b7f6562b67784ef346aeca2.jpg"
           />
