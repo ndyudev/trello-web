@@ -35,7 +35,7 @@ function Profiles() {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar
-            sx={{ width: 34, height: 34 }}
+            sx={{ width: 36, height: 36 }}
             alt="nDyuDev"
             src="https://i.pinimg.com/564x/44/cf/8b/44cf8b5f7b7f6562b67784ef346aeca2.jpg"
           />
@@ -43,6 +43,7 @@ function Profiles() {
       </Tooltip>
 
       <Menu
+        sx={{ color:'white'}}
         id="basic-menu-profiles"
         anchorEl={anchorEl}
         open={open}
