@@ -47,10 +47,28 @@ function BoardContent({ board }) {
         setActiveDragItemData(event?.active?.data?.current)
         console.log('handleDragStart:', event)
   }
+  // Trigger trong qua trinh keo
+  const handleDragOver = (event) => {
+    // Khong lam gi them neu dang keo column
+    if(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) return
+    console.log('handleDragEnd:', event)
+    const { active, over } = event
+    
+    if(!active || !over) return
+
+    const { id: activeDraggingCardId } = active
+    const { id: OverCardId } = over
+  }
 
   const handleDragEnd = (event) => {
-    // console.log('handleDragEnd:', event)
-    const { active, over } = event
+    console.log('handleDragEnd:', event)
+
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) {
+      // console.log('Hanh Dong Keo The card - Tam Thoi khong lam gi ca')
+      return
+    }
+
+    if(!active || !over) return
 
     // Kiểm tra nếu không có `over` (kéo ra ngoài vùng thả)
     if (!over) return
@@ -85,9 +103,11 @@ function BoardContent({ board }) {
   }
 
   return (
-    <DndContext 
-      onDragEnd={handleDragEnd} 
+    <DndContext
       onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd} 
+      
       sensors={sensors}
     >
       <Box
