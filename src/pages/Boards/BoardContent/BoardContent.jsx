@@ -3,7 +3,7 @@ import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sorts'
 import { DndContext, 
         // PointerSensor,
-        useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core'
+        useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects,closestCorners } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useEffect, useState } from 'react'
 import { cloneDeep } from 'lodash'
@@ -159,7 +159,9 @@ function BoardContent({ board }) {
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd} 
-      
+      // Thuat toan phat hien va cham  ( Nếu không có nó thì Card Lớn sẽ không kéo qu qua column được vì lúc này nó đang bị conflict giữa card và column, chúng ta thay closetCorner thay vì closetCenter)
+      collisionDetection={closestCorners}
+      // Cảm biến
       sensors={sensors}
     >
       <Box
