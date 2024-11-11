@@ -33,6 +33,7 @@ function BoardContent({ board }) {
   const [activeDragItemId, setActiveDragItemID] = useState(null)
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
+  const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState(null)
 
   useEffect(() => {
     setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
@@ -49,6 +50,11 @@ function BoardContent({ board }) {
     setActiveDragItemType(event?.active?.data?.current?.columnId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
     setActiveDragItemData(event?.active?.data?.current)
     // console.log('handleDragStart:', event)
+
+    // Nếu là kéo card thì mới thực hiện hành động như set giá trị oldColumn
+    if(event?.active?.data?.current?.columnId) {
+      setOldColumnWhenDraggingCard(findColumnByCardId(event?.active?.id))
+    }
   }
 
   // Trigger trong quá trình kéo
@@ -112,9 +118,9 @@ function BoardContent({ board }) {
       // Nếu không tồn tại 1 trong 2 column thì không làm gì để tránh crash trang web
       if (!activeColumn || !overColumn) return
 
-      console('activeColumn:', activeColumn)
-      console('overColumn:', overColumn)
-      if (activeColumn._id !== overColumn._id) {
+      console.log('oldColumnWhenDraggingCard:', oldColumnWhenDraggingCard)
+      console.log('overColumn:', overColumn)
+      if (oldColumnWhenDraggingCard._id !== overColumn._id) {
         console.log('hanh dong keo tha card giua 2 column khac nhau')
       } else {
         console.log('hanh dong keo tha card trong cung 1 column')
@@ -129,10 +135,11 @@ function BoardContent({ board }) {
         setOrderedColumns(dndOrderedColumns)
       }
     }
-
+    // Những dữ liệu sau khi kéo thả này luôn phải đưa về giá trị null mặc định ban đầu
     setActiveDragItemID(null)
     setActiveDragItemData(null)
     setActiveDragItemType(null)
+    setOldColumnWhenDraggingCard(null)
   }
 
   const customDropAnimation = {
