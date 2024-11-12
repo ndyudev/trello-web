@@ -10,6 +10,7 @@ import { cloneDeep } from 'lodash'
 
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
+import { cardActionAreaClasses } from '@mui/material'
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
@@ -138,6 +139,14 @@ function BoardContent({ board }) {
           const nextColumns = cloneDeep(prevColumns)
 
           // Tìm tới column mà chúng ta đang thả.
+          const targetColumn = nextColumns.find(column => column._id === overColumn._id)
+
+          // Cập nhập lại 2 giá trị mới là card và cardOrderIds trong cái targetColumn
+          targetColumn.cards = dndOrderedCards
+          targetColumn.cardOrderIds = dndOrderedCards.map(card => card._id)
+          
+          // Trả về vị trí state mới ( chuẩn vị trí )
+          return nextColumns
         })
       }
     }
