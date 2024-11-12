@@ -84,6 +84,7 @@ function BoardContent({ board }) {
         const modifier = isBelowOverItem ? 1 : 0
         newCardIndex = overCardIndex >= 0 ? overCardIndex + modifier : overColumn?.cards?.length + 1
 
+        // Clone mảng OrderredColumnsState cũ ra một cái mới để xử lý data rồi return - cập nhập lại OrderedColumnsState mới
         const nextColumns = cloneDeep(prevColumns)
         const nextActiveColumn = nextColumns.find(column => column._id === activeColumn._id)
         const nextOverColumn = nextColumns.find(column => column._id === overColumn._id)
@@ -117,21 +118,40 @@ function BoardContent({ board }) {
   
       // Nếu không tồn tại 1 trong 2 column thì không làm gì để tránh crash trang web
       if (!activeColumn || !overColumn) return
-
-      console.log('oldColumnWhenDraggingCard:', oldColumnWhenDraggingCard)
-      console.log('overColumn:', overColumn)
+      //Keos card qua 2 column khasc nhau
+      // Phải dung tới activeDragItemData ( set vào state từ bước handleDragStart ) chứ không phải acticeData
+      // tong scope handleDragEnd này vì sau khi đi qua onDragOver tới đây là stats của card đã bị cập nhập một lần rồi.
       if (oldColumnWhenDraggingCard._id !== overColumn._id) {
-        console.log('hanh dong keo tha card giua 2 column khac nhau')
+        //
       } else {
-        console.log('hanh dong keo tha card trong cung 1 column')
+        // hành động kéo thả card trong cùng 1 column
+
+        // Lấy vị trí cũ ( từ thằng  oldColumnWhenDraggingCard)
+        const oldCardIndex = oldColumnWhenDraggingCard?.cards?.findIndex(c => c._id === activeDragItemId)
+        // Lấy vị trí mới ( từ thằng  )
+        const newCardIndex = overColumn?.cards?.findIndex(c => c._id === OverCardId)
+        // Dùng arrayMove vì kéo card trong một cái column thì tương tự với logic 
+        const dndOrderedCards = arrayMove(oldColumnWhenDraggingCard?.cards, oldCardIndex, newCardIndex)
+
+        setOrderedColumns(prevColumns => {
+          // Clone mảng OrderredColumnsState cũ ra một cái mới để xử lý data rồi return - cập nhập lại OrderedColumnsState mới
+          const nextColumns = cloneDeep(prevColumns)
+
+          // Tìm tới column mà chúng ta đang thả.
+        })
       }
     }
-
+    // Xử lý kleos thả Columns trong cùng 1 một cái boardContent
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
       if (active.id !== over.id) {
-        const oldIndex = orderedColumns.findIndex(c => c._id === active.id)
-        const newIndex = orderedColumns.findIndex(c => c._id === over.id)
-        const dndOrderedColumns = arrayMove(orderedColumns, oldIndex, newIndex)
+        // Lấy vị trí cũ ( từ thằng active )
+        const oldColumnIndex = orderedColumns.findIndex(c => c._id === active.id)
+        // Lấy vị trí mới ( từ thằng over )
+        const newColumnIndex = orderedColumns.findIndex(c => c._id === over.id)
+        // Dùng arrayMove của thằng dnd-kit để sắp xếp lại mảng Columns ban đầu
+        // Code của arrayMove ở đây : Dnd - kit / ArrayMove.ts
+        const dndOrderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
+
         setOrderedColumns(dndOrderedColumns)
       }
     }
