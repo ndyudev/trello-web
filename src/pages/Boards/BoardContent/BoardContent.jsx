@@ -3,10 +3,12 @@ import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sorts'
 import { DndContext, 
         // PointerSensor,
-        useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core'
+        useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects, 
+        closestCorners,
+        pointerWithin} from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
-import { useEffect, useState } from 'react'
-import { cloneDeep } from 'lodash'
+import { useEffect, useState, useCallback } from 'react'
+import { cloneDeep, first } from 'lodash'
 
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
@@ -214,8 +216,33 @@ function BoardContent({ board }) {
     })
   }
 
+  // Sẽ custom lại chiến lược / thuật tóan phát hiện va chạm tối ưu cho việc kéo thả card giữa nhiều columns
+  // args = arguments = Các đổi số và tham số
+  const collisionDetectionStrategy = useCallback((args) => {
+    console.log('collisionDetectionStrategy')
+    // So sánh thay vì gán
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
+      const pointerIntersections = pointerWithin(args)
+      const intersections = !!pointerIntersections?.length ? pointerIntersections : closestCorners(args)
+      return intersections
+    } else {
+      return closestCorners(args) // fallback trong trường hợp không phải cột
+    }
+  }, [activeDragItemType])
+
+
+
   return (
     <DndContext
+      // Thuật tóa phát hiện va chạm ( nếu không có nó thì card với cover lớn sẽ không kéo qua Column đựoc vì lúc này nó đang bị conflict giữa card và column)
+      //  Chung ta sẽ dùng closetCorners thay vì closestCenter
+      // collisionDetection={closestCorners}
+      // Update video 37: nếu chỉ dùng closetsCorners sẽ có bug flickering + sai lệch dữ liệu 
+      // Tự custom nâng cao thuật toán phát hiện va chạm 
+
+      collisionDetection={collisionDetectionStrategy}
+
+
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd} 
