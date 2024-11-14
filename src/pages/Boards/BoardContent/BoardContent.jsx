@@ -235,22 +235,27 @@ function BoardContent({ board }) {
 
     // Xác định các điểm va chạm bằng pointerWithin hoặc closestCorners
     const pointerIntersections = pointerWithin(args)
-    // console.log('Pointer intersections:', pointerIntersections)
+    // Nếu pointerIntersections là mảng rỗng, return luôn không làm gì hết.
+    // Xử lý triệt để cái bù flickering của thư viện DndKit trong trường hợp sau:
+    // - Kéo một card có img cover lớn và kéo lên phía trên cùng ra khỏi khu vực kéo thả
+    if(!pointerIntersections?.length) return
 
-    const intersections = pointerIntersections?.length 
-      ? pointerIntersections 
-      : closestCorners(args)
+    // console.log('Pointer intersections:', pointerIntersections)
+    // Thuật tóan phát hiện va chạm sẽ trả về một mảng các va chạm ở đây (không cần bước này nữa)
+    // const intersections = !!pointerIntersections?.length 
+    //   ? pointerIntersections 
+    //   : closestCorners(args)
     // console.log('Intersections:', intersections)
 
     // Lấy ID đầu tiên của phần tử va chạm
-    let overId = getFirstCollision(intersections, 'id')
+    let overId = getFirstCollision(pointerIntersections, 'id')
     // console.log('First collision overId:', overId)
     // Đoạn này để fix cái vụ flickering
     // Nếu cái over là column thì sẽ tìm tới cái cardId gần nhất trong khu vực va chạm đó dựa vào
-    // thuật toán phát hiện va chạm closestCenter hoặc closestConrners đều được. Tuy nhiên ở đây dùng closestCenter mượt mà hơn
+    // thuật toán phát hiện va chạm closestCenter hoặc closestConrners đều được. Tuy nhiên ở đây dùng closestCorners mượt mà hơn
     const checkColumn = orderedColumns.find(column => column._id === overId)
     if(checkColumn) {
-      overId = closestCenter({
+      overId = closestCorners({
         ...args,
         droppableContainers: args.droppableContainers.filter(container => {
           return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
