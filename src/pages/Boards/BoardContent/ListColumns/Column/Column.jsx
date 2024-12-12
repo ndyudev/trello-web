@@ -20,11 +20,13 @@ import ListCard from './ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { height } from '@mui/system'
-import { Opacity } from '@mui/icons-material'
+// import { height } from '@mui/system'
+// import { Opacity } from '@mui/icons-material'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
-import theme from '~/theme'
+// import theme from '~/theme'
+import { toast } from 'react-toastify'
+
 
 function Column({column}) {
 
@@ -55,10 +57,10 @@ function Column({column}) {
 
     const addNewCard = () => {
         if(!newCardTitle) {
-        // console.error("Please enter Card Title !")
+        toast.error("Please Enter Card Title !", { position: 'bottom-right'})
         return
         }
-        // console.log(newCardTitle)
+        // toast.log(newCardTitle,  position="top-right", theme="colored" )
         // Gọi API ở đây
 
         // Đóng lại trạng thái thêm Card mới & Clear input
