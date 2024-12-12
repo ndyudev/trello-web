@@ -3,12 +3,16 @@ import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sorts'
 import { DndContext, 
         // PointerSensor,
-        useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects, 
+        useSensor, useSensors,
+        //  MouseSensor,
+        //  TouchSensor,
+        DragOverlay, defaultDropAnimationSideEffects, 
         closestCorners,
         // closestCenter,
         // rectIntersection,
         pointerWithin,
         getFirstCollision } from '@dnd-kit/core'
+import { MouseSensor, TouchSensor } from '~/customLibraries/DndKitSensors'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { cloneDeep, isEmpty } from 'lodash'
