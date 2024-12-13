@@ -6,7 +6,7 @@ import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
 
-import { fetchBoardDetailsAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createNewCardAPI, createNewColumnAPI } from '~/apis'
 
 function Board() {
 
@@ -21,11 +21,35 @@ function Board() {
       })
     }, [])
 
+    // Function này có nhiệm vụ gọi API tạo column và làm lại dữ liệu State Board
+    const createNewColumn = async (newColumnData) => {
+      const createdColumn = await createNewColumnAPI({
+        ...newColumnData,
+        boardId: board._id
+      })
+      console.log(createdColumn)
+      // Cập nhập state board
+    }
+
+    // Function này có nhiệm vụ gọi API tạo Card và làm lại dữ liệu State Board
+    const createNewCard = async (newCardData) => {
+      const createdCard = await createNewCardAPI({
+        ...newCardData,
+        boardId: board._id
+      })
+      console.log(createdCard)
+      // Cập nhập state board
+    }
+
     return (
         <Container disableGutters maxWidth={false} sx={{ height:'100vh'}}>
           <AppBar/>
           <BoardBar board={board}/>
-          <BoardContent board={board}/>
+          <BoardContent 
+            board={board}
+            createNewColumn={createNewColumn}
+            createNewCard={createNewCard}
+          />
         </Container>
       )
 }
