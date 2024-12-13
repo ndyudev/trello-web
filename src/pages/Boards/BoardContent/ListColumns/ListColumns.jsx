@@ -10,19 +10,28 @@ import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if(!newColumnTitle) {
       toast.error("Please Enter Column Title !")
       return
     }
-    // console.log(newColumnTitle)
-    // Gọi API ở đây
+    // Tạo dữ liệu Column để gọi API
+    const newColumnData = {
+      title: newColumnTitle,
+    }
+    /**
+     *  Gọi lên props function createNewColumn nằm ở component cha cao nhat (boards/_id.jsx)
+     * Lúc này có thể gọi luôn API ở đây xong thay vì phải lần lượt gọi ngược lên những component cha phía bên trên. 
+     * ( Đối với component con nằm càng sâu thì càng khổ :D)
+     * - Việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
+     */
+    await createNewColumn(newColumnData)
 
     // Đóng lại trạng thái thêm Column mới & Clear input
     toggleOpenNewColumnForm()
@@ -40,7 +49,7 @@ function ListColumns({ columns }) {
           overflowY: 'hidden',
           '&::-webkit-scrollbar-track': { m : 2 }
         }}>
-          {columns?.map(column => <Column key={column._id} column={column}/> )}
+          {columns?.map(column => <Column key={column._id} column={column} createNewCard={createNewCard}/> )}
 
           {/** Box Add New Column CTA */}
           {!openNewColumnForm
