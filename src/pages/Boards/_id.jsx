@@ -8,7 +8,7 @@ import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
 // import { mockData } from '~/apis/mock-data'
 
-import { fetchBoardDetailsAPI, createNewCardAPI, createNewColumnAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createNewCardAPI, createNewColumnAPI, updateBoardDetailsAPI } from '~/apis'
 
 function Board() {
 
@@ -70,6 +70,19 @@ function Board() {
       }
       setBoard(newBoard)
     }
+    // Func này có nhiệm vụ gọi API và xử lý khi kéo thả Column xong xui
+    const moveColumns = async (dndOrderedColumns) => {
+      // Cập nhập lại cho chuẩn dữ liệu State Board
+      const dndOrderedColumnsIds = dndOrderedColumns.map(c => c._id)
+
+      const newBoard = { ...board }
+      newBoard.columns = dndOrderedColumns
+      newBoard.columnOrderIds = dndOrderedColumnsIds
+      setBoard(newBoard)
+
+      // Gọi API Update Board
+      await updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
+    }
 
     return (
         <Container disableGutters maxWidth={false} sx={{ height:'100vh'}}>
@@ -79,6 +92,7 @@ function Board() {
             board={board}
             createNewColumn={createNewColumn}
             createNewCard={createNewCard}
+            moveColumns={moveColumns}
           />
         </Container>
       )
