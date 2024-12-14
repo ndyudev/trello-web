@@ -17,7 +17,8 @@ import {
   createNewCardAPI, 
   createNewColumnAPI, 
   updateBoardDetailsAPI,
-  updateColumnDetailsAPI
+  updateColumnDetailsAPI,
+  moveCardToDifferentColumn
 } from '~/apis'
 import { Typography } from '@mui/material'
 
@@ -27,7 +28,7 @@ function Board() {
 
     useEffect(() => {
       // Tạm thời fix cứng boardId, flow chuẩn chỉnh về sau sử dụng react-router-dom để lấy chuẩn boardId từ URL về
-      const boardId = '675d3db1ef57727b5c0d7d85'
+      const boardId = '675d863a5bc51edc08c54bbd '
       // Call API
       fetchBoardDetailsAPI(boardId).then(board => {
         // Sắp xếp thứ tự columns luôn ở đây trước khi đưa dữ liệu xuống bên dưới các component con.
@@ -43,9 +44,7 @@ function Board() {
             // Sắp xếp thứ tự các cards luôn ở đây trước khi đưa dữ liệu xuống bên dưới các component con.
             column.cardOrderIds = mapOrder(column.cards, column.cardOrderIds, '_id')
           }
-        })
-        console.log('full board:', board)
-        
+        })        
         setBoard(board)
       })
     }, [])
@@ -122,6 +121,32 @@ function Board() {
       updateColumnDetailsAPI(columnId, { cardOrderIds: dndOrderedCardIds })
     }
 
+    /**
+     * Khi duy chuyển card sang column khác:
+     * B1: Cập nhập mảng cardOrderIds của Column ban đầu chứa nó ( Hiểu bản chất là xóa cái _id của Card ra khỏi mảng)
+     * B2: Cập nhập mảng cardOrderIds của Column tiếp theo ( Hiểu bản chất là thêm _id của Card vào mảng )
+     * B3: Cập nhập lại trường Column mới của cái Card đã kéo 
+     * => Làm một API support riêng.
+     */
+    const moveCardToDifferentColumnTTT = (currentCardId, prevColumnId, nextColumnId, dndOrderedColumns) => {
+      // Cập nhập lại cho chuẩn dữ liệu State Board
+      const dndOrderedColumnsIds = dndOrderedColumns?.map(c => c._id)
+
+      const newBoard = { ...board }
+      newBoard.columns = dndOrderedColumns
+      newBoard.columnOrderIds = dndOrderedColumnsIds
+      setBoard(newBoard)
+
+      // Gọi API xử lý phía BE
+      moveCardToDifferentColumn({
+        currentCardId,
+        prevColumnId,
+        prevCardOrderIds: dndOrderedColumns?.find(c => c._id === prevColumnId)?.cardOrderIds,
+        nextColumnId,
+        nextCardOrderIds: dndOrderedColumns?.find(c => c._id === nextColumnId)?.cardOrderIds
+      })
+    }
+
     if(!board) {
       return (
         <Box sx={{ 
@@ -148,6 +173,7 @@ function Board() {
             createNewCard={createNewCard}
             moveColumns={moveColumns}
             moveCardInTheSameColumn={moveCardInTheSameColumn}
+            moveCardToDifferentColumn={moveCardToDifferentColumnTTT}
           />
         </Container>
       )
