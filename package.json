@@ -19,6 +19,7 @@
     "@mui/material": "^5.16.7",
     "axios": "^1.7.9",
     "lodash": "^4.17.21",
+    "material-ui-confirm": "^3.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-toastify": "^9.1.3"
