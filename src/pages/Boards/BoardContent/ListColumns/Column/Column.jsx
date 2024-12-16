@@ -63,7 +63,7 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
         toast.error("Please Enter Card Title !", { position: 'bottom-right'})
         return
         }
-        // toast.log(newCardTitle,  position="top-right", theme="colored" )
+        toast.log(newCardTitle,  position="top-right", theme="colored" )
         // Tạo dữ liệu Card để gọi API
         /**
          *  Gọi lên props function createNewColumn nằm ở component cha cao nhat (boards/_id.jsx)
