@@ -18,7 +18,7 @@ function ListColumns({ columns, createNewColumn, createNewCard, deleteColumnDeta
 
   const addNewColumn = () => {
     if(!newColumnTitle) {
-      // toast.error("Please Enter Column Title !")
+      toast.error("Please Enter Column Title !")
       return
     }
     // Tạo dữ liệu Column để gọi API
