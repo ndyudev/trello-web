@@ -1,82 +1,75 @@
-# Trello with MERN Stack (nDyu Dev)
+# Trello Web
 
-A Trello-inspired project management tool built with the MERN Stack (MongoDB, Express, React, and Node.js). This application provides a responsive, user-friendly interface for managing boards, lists, and cards, enabling teams to stay organized and productive.
+## Giới thiệu
 
-## Features
+**Trello Web** là một ứng dụng quản lý dự án dựa trên ý tưởng của Trello, được xây dựng bằng công nghệ MERN (MongoDB, Express, React, Node.js). Ứng dụng này giúp các nhóm làm việc hiệu quả hơn bằng cách cung cấp một nền tảng trực quan để quản lý bảng, danh sách và thẻ công việc.
 
-- **User Authentication**: Secure login and signup functionality with JSON Web Tokens (JWT).
-- **Board Management**: Create and customize multiple boards for different projects.
-- **Task Lists & Cards**: Add lists to boards, and create draggable cards within each list for task management.
-- **Real-Time Collaboration**: Instant updates across multiple users using web sockets.
-- **Search & Filter**: Quickly find boards, lists, or specific tasks.
-- **Activity Tracking**: View detailed logs of changes to track task progress.
-- **Responsive Design**: Optimized for both desktop and mobile views.
+## Tính năng
 
-## Tech Stack
+- **Xác thực người dùng**: Đăng nhập và đăng ký an toàn bằng JSON Web Tokens (JWT).
+- **Quản lý bảng**: Tạo và tùy chỉnh nhiều bảng cho các dự án khác nhau.
+- **Danh sách và Thẻ công việc**: Thêm danh sách vào bảng và tạo các thẻ có thể kéo thả trong mỗi danh sách.
+- **Hợp tác thời gian thực**: Cập nhật ngay lập tức trên nhiều người dùng thông qua WebSocket.
+- **Tìm kiếm và lọc**: Tìm nhanh các bảng, danh sách hoặc công việc cụ thể.
+- **Theo dõi hoạt động**: Xem nhật ký chi tiết về các thay đổi để theo dõi tiến độ công việc.
+- **Thiết kế responsive**: Tối ưu hóa cho cả giao diện máy tính để bàn và di động.
 
-- **Frontend**: React, Vite, and CSS modules for styling, using [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) for fast refresh with SWC.
-- **Backend**: Node.js and Express for REST API development.
-- **Database**: MongoDB to store user, board, and task data.
-- **Real-Time Communication**: Socket.io for instant updates and real-time collaboration.
-- **Authentication**: JWT (JSON Web Token) for secure user sessions.
+## Công nghệ sử dụng
 
-## Getting Started
+- **Front-end**: React, Vite, CSS Modules
+- **WebSocket**: Socket.io cho cập nhật thời gian thực
+- **Xác thực**: JSON Web Tokens (JWT)
+
+## Cài đặt
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) v14 or above
-- [MongoDB](https://www.mongodb.com/try/download/community) (or MongoDB Atlas for a cloud-hosted database)
 
-### Installation
+- Node.js (>= 14.x)
+- npm (>= 5.x)
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/ndyudev/trello-web.git
-   cd trello-clone-mern
+### Bước 1: Clone repository
 
+```bash
+git clone https://github.com/ndyudev/trello-web.git
+cd trello-web
+```
 
+### Bước 2: Cài đặt các phụ thuộc
 
-Install dependencies for both client and server:
-
-bash
-Sao chép mã
-# Install client dependencies
-cd client
+```bash
 npm install
+```
 
-# Install server dependencies
-cd ../server
-npm install
-Environment Variables
-Create a .env file in the server folder with the following variables:
+### Bước 3: Chạy ứng dụng
 
-plaintext
-Sao chép mã
-MONGO_URI=<your_mongodb_uri>
-JWT_SECRET=<your_jwt_secret>
-PORT=5000
-Start the application:
-
-Backend:
-bash
-Sao chép mã
-cd server
-npm start
-Frontend:
-bash
-Sao chép mã
-cd client
+```bash
 npm run dev
-Access the application: Visit http://localhost:3000 to view the app.
+```
 
-Usage
-Sign up and log in to create a new workspace.
-Start creating boards, add lists to them, and populate these lists with cards.
-Drag and drop cards to reorder tasks within and across lists.
-Collaborate in real-time by inviting others to your boards.
-Screenshots
-<!-- Add screenshots or GIFs of your application here -->
-Contributing
-Contributions are welcome! Please fork the repository and open a pull request to suggest changes.
+Mở trình duyệt và truy cập `http://localhost:3000` để xem ứng dụng.
 
-License
-This project is open-source and available under the MIT License.
+## Cấu trúc dự án
+
+```
+trello-web/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   └── App.jsx
+├── package.json
+└── README.md
+```
+
+## Đóng góp
+
+Chúng tôi hoan nghênh mọi đóng góp từ cộng đồng. Vui lòng gửi pull request hoặc mở issue nếu bạn tìm thấy lỗi hoặc có ý tưởng cải tiến.
+
+## Giấy phép
+
+Dự án này được cấp phép theo Giấy phép MIT. Vui lòng xem tệp [LICENSE](LICENSE) để biết thêm chi tiết.
+
+## Liên hệ
+
+Nếu bạn có bất kỳ câu hỏi nào, hãy liên hệ với chúng tôi qua email: chauunhatduyyit@gmail.com.
